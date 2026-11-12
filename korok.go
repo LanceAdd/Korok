@@ -4,21 +4,21 @@ import (
 	"log"
 	"reflect"
 
-	"korok.io/korok/gfx"
-	"korok.io/korok/engi"
-	"korok.io/korok/game"
-	"korok.io/korok/hid"
-	"korok.io/korok/effect"
-	"korok.io/korok/hid/input"
-	"korok.io/korok/anim/frame"
+	"github.com/LanceAdd/Korok/anim/frame"
+	"github.com/LanceAdd/Korok/effect"
+	"github.com/LanceAdd/Korok/engi"
+	"github.com/LanceAdd/Korok/game"
+	"github.com/LanceAdd/Korok/gfx"
+	"github.com/LanceAdd/Korok/hid"
+	"github.com/LanceAdd/Korok/hid/input"
 )
 
-const VERSION_CODE  = 2
-const VERSION_NAME  = "0.2"
+const VERSION_CODE = 2
+const VERSION_NAME = "0.2"
 
 type Options hid.WindowOptions
 
-func Run(options *Options, sc game.Scene)  {
+func Run(options *Options, sc game.Scene) {
 	log.Println("Game Start! " + options.Title)
 
 	g := &game.Game{}
@@ -68,13 +68,13 @@ var SceneMan *game.SceneManager
 var Entity *engi.EntityManager
 
 var Script *game.ScriptTable
-var Tag    *game.TagTable
+var Tag *game.TagTable
 
 // shortcut component-api for rendering system
-var Sprite 	   *gfx.SpriteTable
-var Mesh       *gfx.MeshTable
-var Transform  *gfx.TransformTable
-var Text       *gfx.TextTable
+var Sprite *gfx.SpriteTable
+var Mesh *gfx.MeshTable
+var Transform *gfx.TransformTable
+var Text *gfx.TextTable
 
 // animation system
 var Flipbook *frame.FlipbookTable

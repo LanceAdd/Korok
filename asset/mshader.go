@@ -12,4 +12,3 @@ func (sm *ShaderManager) GetShaderStr(key string) (string, string) {
 	}
 	return "", ""
 }
-

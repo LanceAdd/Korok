@@ -1,11 +1,11 @@
 package bk
 
 import (
-	"korok.io/korok/hid/gl"
+	"github.com/LanceAdd/Korok/hid/gl"
 
+	"image"
 	"log"
 	"unsafe"
-	"image"
 )
 
 /// 在 2D 引擎中，GPU 资源的使用时很有限的，
@@ -27,11 +27,12 @@ type Memory struct {
 
 // ID FORMAT
 // 0x F   FFF
-//    ^    ^
-//    |    +---- id value
-//    +--------- id type
+//
+//	^    ^
+//	|    +---- id value
+//	+--------- id type
 const (
-	IdTypeIndex   uint16 = iota
+	IdTypeIndex uint16 = iota
 	IdTypeVertex
 	IdTypeTexture
 	IdTypeLayout
@@ -94,12 +95,12 @@ func NewResManager() *ResManager {
 // skip first index - 0
 func (rm *ResManager) Init() {
 	if rm.ibIndex == 0 {
-		rm.ibIndex ++
-		rm.vbIndex ++
-		rm.ttIndex ++
-		rm.vlIndex ++
-		rm.umIndex ++
-		rm.shIndex ++
+		rm.ibIndex++
+		rm.vbIndex++
+		rm.ttIndex++
+		rm.vlIndex++
+		rm.umIndex++
+		rm.shIndex++
 	}
 }
 
@@ -141,7 +142,7 @@ func (rm *ResManager) AllocVertexBuffer(mem Memory, stride uint16) (id uint16, v
 	if err := vb.Create(mem.Size, mem.Data, stride, 0); err != nil {
 		log.Println("fail to alloc vertex-buffer, ", err)
 	} else {
-		if  gDebug&DebugResMan != 0 {
+		if gDebug&DebugResMan != 0 {
 			log.Printf("alloc vertex-buffer: (%d, %d)", id&IdMask, vb.Id)
 		}
 	}
@@ -177,7 +178,7 @@ func (rm *ResManager) AllocTexture(img image.Image) (id uint16, tex *Texture2D) 
 		tex = &rm.textures[index]
 	} else {
 		id, tex = rm.ttIndex, &rm.textures[rm.ttIndex]
-		rm.ttIndex ++
+		rm.ttIndex++
 	}
 	id = id | (IdTypeTexture << IdTypeShift)
 	if err := tex.Create(img); err != nil {
@@ -257,7 +258,7 @@ func (rm *ResManager) VertexBuffer(id uint16) (ok bool, vb *VertexBuffer) {
 
 // Texture returns the low-level Texture struct.
 func (rm *ResManager) Texture(id uint16) (ok bool, tex *Texture2D) {
-	t, v := id >>IdTypeShift, id&IdMask
+	t, v := id>>IdTypeShift, id&IdMask
 	if t != IdTypeTexture || v >= MaxTexture {
 		return false, nil
 	}
@@ -285,7 +286,7 @@ func (rm *ResManager) Shader(id uint16) (ok bool, sh *Shader) {
 	return true, &rm.shaders[v]
 }
 
-////// MAX SIZE
+// //// MAX SIZE
 var MAX = struct {
 }{}
 

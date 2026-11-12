@@ -1,3 +1,4 @@
+//go:build !android && !ios && !js && !windows && !darwin
 // +build !android,!ios,!js,!windows,!darwin
 
 package gl

@@ -1,11 +1,11 @@
 package bk
 
 import (
-	"korok.io/korok/hid/gl"
+	"github.com/LanceAdd/Korok/hid/gl"
 
+	"errors"
 	"log"
 	"unsafe"
-	"errors"
 )
 
 type IndexBuffer struct {
@@ -14,7 +14,7 @@ type IndexBuffer struct {
 	flags uint16
 }
 
-func (ib *IndexBuffer) Create(size uint32, data unsafe.Pointer, flags uint16) error{
+func (ib *IndexBuffer) Create(size uint32, data unsafe.Pointer, flags uint16) error {
 	ib.size = size
 	ib.flags = flags
 
@@ -35,7 +35,7 @@ func (ib *IndexBuffer) Create(size uint32, data unsafe.Pointer, flags uint16) er
 	return nil
 }
 
-/// discard=false
+// / discard=false
 func (ib *IndexBuffer) Update(offset uint32, size uint32, data unsafe.Pointer, discard bool) {
 	if 0 == ib.Id {
 		log.Println("updating invalid index buffer")
@@ -64,8 +64,8 @@ type VertexBuffer struct {
 	layout uint16 // Stride | Offset
 }
 
-/// draw indirect >= es 3.0 or gl 4.0
-func (vb *VertexBuffer) Create(size uint32, data unsafe.Pointer, layout uint16, flags uint16) error{
+// / draw indirect >= es 3.0 or gl 4.0
+func (vb *VertexBuffer) Create(size uint32, data unsafe.Pointer, layout uint16, flags uint16) error {
 	vb.size = size
 	vb.layout = layout
 	vb.target = gl.ARRAY_BUFFER
@@ -84,7 +84,7 @@ func (vb *VertexBuffer) Create(size uint32, data unsafe.Pointer, layout uint16, 
 	return nil
 }
 
-/// discard = false
+// / discard = false
 func (vb *VertexBuffer) Update(offset uint32, size uint32, data unsafe.Pointer, discard bool) {
 	if vb.Id == 0 {
 		log.Println("Updating invalid vertex buffer")

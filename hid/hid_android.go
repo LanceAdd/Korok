@@ -1,3 +1,4 @@
+//go:build android
 // +build android
 
 package hid
@@ -36,13 +37,12 @@ void kk_finish(uintptr_t java_vm, uintptr_t jni_env, jobject ctx) {
 	jmethodID finish_id = (*env)->GetMethodID(env, clazz, "finish", "()V");
 	(*env)->CallVoidMethod(env, ctx, finish_id);
 }
- */
+*/
 import "C"
 import (
 	"golang.org/x/mobile/app"
 	"os"
 	"unsafe"
-
 )
 
 func FileDir() string {

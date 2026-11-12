@@ -1,3 +1,4 @@
+//go:build ios
 // +build ios
 
 package hid
@@ -35,7 +36,7 @@ char* kk_getFileDir() {
     char* retString = strdup(str);
     return retString;
 }
- */
+*/
 import "C"
 import (
 	"unsafe"

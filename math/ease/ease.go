@@ -1,6 +1,5 @@
 package ease
 
-
 type Function func(float64) float64
 
 func Linear(t float64) float64 {

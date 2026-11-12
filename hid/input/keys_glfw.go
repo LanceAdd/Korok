@@ -1,8 +1,9 @@
+//go:build !android && !ios && !js
 // +build !android,!ios,!js
 
 package input
 
-import "github.com/go-gl/glfw/v3.2/glfw"
+import "github.com/go-gl/glfw/v3.3/glfw"
 
 const (
 	Grave        = Key(glfw.KeyGraveAccent)

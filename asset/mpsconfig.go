@@ -1,13 +1,13 @@
 package asset
 
 import (
-	"korok.io/korok/asset/res"
-	"korok.io/korok/effect"
-	"korok.io/korok/math"
-	"korok.io/korok/math/f32"
+	"github.com/LanceAdd/Korok/asset/res"
+	"github.com/LanceAdd/Korok/effect"
+	"github.com/LanceAdd/Korok/math"
+	"github.com/LanceAdd/Korok/math/f32"
 
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"log"
 )
 
@@ -60,7 +60,7 @@ func (pcm *ParticleConfigManager) load(file string) (ref interface{}, err error)
 		return
 	}
 
-	data, err := ioutil.ReadAll(render)
+	data, err := io.ReadAll(render)
 	if err != nil {
 		return
 	}

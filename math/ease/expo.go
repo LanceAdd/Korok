@@ -31,4 +31,3 @@ func InOutExpo(t float64) float64 {
 		}
 	}
 }
-

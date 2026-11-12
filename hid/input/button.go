@@ -1,6 +1,5 @@
 package input
 
-
 // JustPressed/JustReleased 表示按键事件
 // IsDown 表示按键状态
 //
@@ -8,14 +7,16 @@ package input
 // 0x0002 记录pressed状态
 // 0x0004 记录release状态
 type button struct {
-	id uint16
+	id    uint16
 	state uint16
 }
+
 var btnId uint16 = 0
 var buttonCache = make([]button, 64)
+
 func NewButton() (btn *button) {
 	btn = &buttonCache[btnId]
-	btnId ++
+	btnId++
 	return
 }
 
@@ -31,9 +32,9 @@ func (btn button) Down() bool {
 	return (btn.state & 0x01) == 1
 }
 
-func (btn *button) Update(down bool){
+func (btn *button) Update(down bool) {
 	d := (btn.state & 0x01) == 1
-	btn.state &= 0x04|0x02
+	btn.state &= 0x04 | 0x02
 	if down {
 		btn.state |= 0x01
 	}

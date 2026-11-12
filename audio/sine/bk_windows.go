@@ -14,7 +14,8 @@
 
 // vanishs 修改于github.com/hajimehoshi/oto
 
-//+build windows
+//go:build windows
+// +build windows
 
 package sine
 

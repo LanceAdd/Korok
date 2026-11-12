@@ -3,7 +3,7 @@ package bk
 import (
 	"log"
 
-	"korok.io/korok/hid/gl"
+	"github.com/LanceAdd/Korok/hid/gl"
 )
 
 type RenderContext struct {

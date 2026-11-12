@@ -45,5 +45,3 @@ func (stack *StackAllocator) Free(size int32) {
 func (stack *StackAllocator) release() {
 	stack.alloc = 0
 }
-
-

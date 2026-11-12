@@ -1,7 +1,6 @@
 package gfx
 
 type ShapeRender struct {
-
 }
 
 func (sr *ShapeRender) DrawRect() {

@@ -6,11 +6,11 @@ import (
 
 func TestEncoder(t *testing.T) {
 	sk := SortKey{
-		Layer:1,
-		Order:2,
-		Shader:3,
-		Blend:4,
-		Texture:5,
+		Layer:   1,
+		Order:   2,
+		Shader:  3,
+		Blend:   4,
+		Texture: 5,
 	}
 
 	key := sk.Encode()
@@ -19,8 +19,8 @@ func TestEncoder(t *testing.T) {
 		t.Error("encoder err")
 	}
 
-	sk1 := &SortKey{}; sk1.Decode(key)
-
+	sk1 := &SortKey{}
+	sk1.Decode(key)
 
 	if sk.Layer != sk1.Layer {
 		t.Error("layer decoder error")

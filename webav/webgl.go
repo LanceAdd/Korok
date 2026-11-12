@@ -1,3 +1,4 @@
+//go:build js
 // +build js
 
 // Copyright 2014 Joseph Hager. All rights reserved.
@@ -351,7 +352,7 @@ type Context struct {
 // If an error is returned it means you won't have access to WebGL
 // functionality.
 func NewContext(canvas js.Value, ca *ContextAttributes) (*Context, error) {
-	if js.Global().Get("WebGLRenderingContext") == js.Undefined() {
+	if js.Global().Get("WebGLRenderingContext").IsUndefined() {
 		return nil, errors.New("Your browser doesn't appear to support webgl.")
 	}
 
@@ -368,9 +369,9 @@ func NewContext(canvas js.Value, ca *ContextAttributes) (*Context, error) {
 		"preserveDrawingBuffer": ca.PreserveDrawingBuffer,
 	}
 	gl := canvas.Call("getContext", "webgl", mb2mi(attrs))
-	if gl == js.Null() {
+	if gl.IsNull() {
 		gl = canvas.Call("getContext", "experimental-webgl", mb2mi(attrs))
-		if gl == js.Null() {
+		if gl.IsNull() {
 			return nil, errors.New("Creating a webgl context has failed.")
 		}
 	}
@@ -964,60 +965,60 @@ func (c *Context) Uniform4i(location js.Value, x, y, z, w int) {
 }
 
 // Assigns a floating point value to a uniform variable for the current program object.
-func (c *Context) Uniform1fv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform1fv(location js.Value, src js.Value) {
 	c.Call("uniform1fv", location, src)
 }
 
 // Assigns a integer value to a uniform variable for the current program object.
-func (c *Context) Uniform1iv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform1iv(location js.Value, src js.Value) {
 	c.Call("uniform1iv", location, src)
 }
 
 // Assigns 2 floating point values to a uniform variable for the current program object.
-func (c *Context) Uniform2fv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform2fv(location js.Value, src js.Value) {
 	c.Call("uniform2fv", location, src)
 }
 
 // Assigns 2 integer values to a uniform variable for the current program object.
-func (c *Context) Uniform2iv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform2iv(location js.Value, src js.Value) {
 	c.Call("uniform2iv", location, src)
 }
 
 // Assigns 3 floating point values to a uniform variable for the current program object.
-func (c *Context) Uniform3fv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform3fv(location js.Value, src js.Value) {
 	c.Call("uniform3fv", location, src)
 }
 
 // Assigns 3 integer values to a uniform variable for the current program object.
-func (c *Context) Uniform3iv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform3iv(location js.Value, src js.Value) {
 	c.Call("uniform3iv", location, src)
 }
 
 // Assigns 4 floating point values to a uniform variable for the current program object.
-func (c *Context) Uniform4fv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform4fv(location js.Value, src js.Value) {
 	c.Call("uniform4fv", location, src)
 }
 
 // Assigns 4 integer values to a uniform variable for the current program object.
-func (c *Context) Uniform4iv(location js.Value, src js.TypedArray) {
+func (c *Context) Uniform4iv(location js.Value, src js.Value) {
 	c.Call("uniform4iv", location, src)
 }
 
 // Sets values for a 2x2 floating point vector matrix into a
 // uniform location as a matrix or a matrix array.
-func (c *Context) UniformMatrix2fv(location js.Value, transpose bool, value js.TypedArray) {
+func (c *Context) UniformMatrix2fv(location js.Value, transpose bool, value js.Value) {
 	c.Call("uniformMatrix2fv", location, transpose, value)
 }
 
 // Sets values for a 3x3 floating point vector matrix into a
 // uniform location as a matrix or a matrix array.
-func (c *Context) UniformMatrix3fv(location js.Value, transpose bool, value js.TypedArray) {
+func (c *Context) UniformMatrix3fv(location js.Value, transpose bool, value js.Value) {
 	c.Call("uniformMatrix3fv", location, transpose, value)
 }
 
 // Sets values for a 4x4 floating point vector matrix into a
 // uniform location as a matrix or a matrix array.
-func (c *Context) UniformMatrix4fv(location js.Value, transpose bool, value js.TypedArray) {
+func (c *Context) UniformMatrix4fv(location js.Value, transpose bool, value js.Value) {
 	c.Call("uniformMatrix4fv", location, transpose, value)
 }
 

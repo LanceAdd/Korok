@@ -13,4 +13,3 @@ func OutSine(t float64) float64 {
 func InOutSine(t float64) float64 {
 	return -0.5 * (math.Cos(math.Pi*t) - 1)
 }
-

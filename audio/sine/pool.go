@@ -14,27 +14,27 @@ type SoundPollCallback func(id uint16)
 
 type SoundChannel struct {
 	BufferPlayer
-	playing bool
-	priority int
+	playing   bool
+	priority  int
 	channelId int
 }
 
 // manager priority and audio play
 type SoundPool struct {
-	R *AudioManger
+	R  *AudioManger
 	cb SoundPollCallback
 
 	// state
-	pause bool
-	mute  bool
+	pause  bool
+	mute   bool
 	volume float32
 
 	nextChanId int
-	channels []*SoundChannel  // quick ref
-	_channels  []SoundChannel // real data
+	channels   []*SoundChannel // quick ref
+	_channels  []SoundChannel  // real data
 }
 
-func (sp *SoundPool) initialize (am *AudioManger, engine *Engine, maxChannel int) *SoundPool {
+func (sp *SoundPool) initialize(am *AudioManger, engine *Engine, maxChannel int) *SoundPool {
 	sp.R = am
 	size := maxChannel
 	if size == 0 {
@@ -75,7 +75,7 @@ func (sp *SoundPool) Tick() {
 	}
 }
 
-func (sp *SoundPool) Play(id uint16, priority int) (chanId int){
+func (sp *SoundPool) Play(id uint16, priority int) (chanId int) {
 	sound, ok := sp.R.Sound(id)
 	if !ok {
 		log.Println("invalid sound id:", id)
@@ -94,7 +94,8 @@ func (sp *SoundPool) Play(id uint16, priority int) (chanId int){
 	}
 
 	// play sample with the channel
-	sp.nextChanId ++; chanId = sp.nextChanId
+	sp.nextChanId++
+	chanId = sp.nextChanId
 	ch.channelId = chanId
 	if ch.playing {
 		ch.Stop()
@@ -107,7 +108,8 @@ func (sp *SoundPool) Play(id uint16, priority int) (chanId int){
 func (sp *SoundPool) allocChannel(p int) (sc *SoundChannel, ok bool) {
 	// allocate a channel
 	if c := sp.channels[0]; !c.playing || c.priority < p {
-		sc = c; ok = true
+		sc = c
+		ok = true
 		c.priority = p
 		c.playing = true
 	}
@@ -177,7 +179,8 @@ func (sp *SoundPool) SetLoop(chanId int, loop int) {
 func (sp *SoundPool) findChannel(chanId int) (sc *SoundChannel, ok bool) {
 	for _, ch := range sp.channels {
 		if ch.channelId == chanId {
-			sc, ok = ch, true; break
+			sc, ok = ch, true
+			break
 		}
 	}
 	return

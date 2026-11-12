@@ -2,7 +2,7 @@ package game
 
 type LoaderState struct {
 	progress int
-	done bool
+	done     bool
 }
 
 type AsyncHandler chan bool
@@ -30,7 +30,7 @@ type Scene interface {
 type SceneManager struct {
 	g *Game
 
-	stack []Scene
+	stack  []Scene
 	hScene Scene
 }
 
@@ -92,7 +92,7 @@ func (sm *SceneManager) Pop() (sn Scene, ok bool) {
 		sn.OnExit()
 		sm.UnLoad(sn)
 
-		if next := size-2; next >= 0 {
+		if next := size - 2; next >= 0 {
 			sn := sm.stack[next]
 			sm.hScene = sn
 			sn.OnEnter(sm.g)
@@ -110,8 +110,7 @@ func (sm *SceneManager) Peek() (sn Scene, ok bool) {
 }
 
 func (sm *SceneManager) Clear() {
-	for i := len(sm.stack)-1; i >= 0; i-- {
+	for i := len(sm.stack) - 1; i >= 0; i-- {
 		sm.stack[i].OnExit()
 	}
 }
-

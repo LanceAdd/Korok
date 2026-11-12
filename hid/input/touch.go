@@ -1,10 +1,10 @@
 package input
 
-import "korok.io/korok/math/f32"
+import "github.com/LanceAdd/Korok/math/f32"
 
 type FingerId int
 
-//// Touch & Mouse input go here
+// // Touch & Mouse input go here
 type PointerInput struct {
 	// The mouse pointer always has a pointer-id of 0
 	Id FingerId
@@ -14,5 +14,3 @@ type PointerInput struct {
 
 	used bool
 }
-
-

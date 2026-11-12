@@ -1,12 +1,15 @@
+//go:build (darwin || windows) && !android && !ios && !js
 // +build darwin windows
-// +build !android,!ios,!js
+// +build !android
+// +build !ios
+// +build !js
 
 package gl
 
 import (
 	"unsafe"
 
-	"github.com/go-gl/gl/v3.2-core/gl"
+	"github.com/go-gl/gl/v3.3-core/gl"
 )
 
 func Init() error {

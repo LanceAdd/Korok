@@ -47,7 +47,7 @@ func NewAtlas(r io.Reader, loader TextureLoader) (*Atlas, error) {
 				return nil, errors.New("spine: failed to read size" + err.Error())
 			}
 
-			width,  _ := strconv.Atoi(size[0])
+			width, _ := strconv.Atoi(size[0])
 			height, _ := strconv.Atoi(size[1])
 
 			tuple, terr = readTuple("filter", scanner)
@@ -70,8 +70,8 @@ func NewAtlas(r io.Reader, loader TextureLoader) (*Atlas, error) {
 				MagFilter: magFilter,
 				UWrap:     ClampToEdge,
 				VWrap:     ClampToEdge,
-				Width:	   width,
-				Height:	   height,
+				Width:     width,
+				Height:    height,
 			}
 
 			direction, err := readValue("repeat", scanner)

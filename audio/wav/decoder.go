@@ -3,9 +3,8 @@ package wav
 import (
 	"encoding/binary"
 	"io"
-	"io/ioutil"
 
-	"korok.io/korok/asset/res"
+	"github.com/LanceAdd/Korok/asset/res"
 )
 
 const (
@@ -109,18 +108,20 @@ func decode(r io.Reader) (*header, error) {
 	return h, nil
 }
 
-/**
+/*
+*
 impl:
-type Decoder interface {
-	FullDecode() (d []byte, numChan, freq int32, err error)
 
-	Decode() int
-	NumOfChan() int
-	BitDepth() int
-	SampleRate() int32
-	Static() []byte
-	ReachEnd() bool
-}
+	type Decoder interface {
+		FullDecode() (d []byte, numChan, freq int32, err error)
+
+		Decode() int
+		NumOfChan() int
+		BitDepth() int
+		SampleRate() int32
+		Static() []byte
+		ReachEnd() bool
+	}
 */
 type Decoder struct {
 	numChannels int32
@@ -145,7 +146,7 @@ func (*Decoder) FullDecode(file res.File) (data []byte, numChan, bitDepth, freq 
 		return
 	}
 
-	buf, err := ioutil.ReadAll(file)
+	buf, err := io.ReadAll(file)
 	if err != nil {
 		return
 	}

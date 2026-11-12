@@ -1,3 +1,4 @@
+//go:build js
 // +build js
 
 package hid
@@ -9,8 +10,8 @@ import (
 	"runtime/pprof"
 	"syscall/js"
 
-	"korok.io/korok/asset/res"
-	"korok.io/korok/hid/gl"
+	"github.com/LanceAdd/Korok/asset/res"
+	"github.com/LanceAdd/Korok/hid/gl"
 
 	"strconv"
 	"time"
@@ -87,10 +88,10 @@ func CreateWindow(option *WindowOptions) {
 	}
 
 	ac := js.Global().Get("AudioContext")
-	if ac == js.Undefined() {
+	if ac.IsUndefined() {
 		ac = js.Global().Get("webkitAudioContext")
 	}
-	if ac == js.Undefined() {
+	if ac.IsUndefined() {
 		println("audio couldn't be initialized")
 	}
 

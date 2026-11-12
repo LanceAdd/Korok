@@ -64,5 +64,5 @@ func Pow2(x uint32) uint32 {
 
 // IsPow2 returns true if the given value if a power-of-two.
 func IsPow2(x uint32) bool {
-	return (x & (x-1)) == 0
+	return (x & (x - 1)) == 0
 }

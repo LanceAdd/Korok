@@ -1,6 +1,7 @@
 package gfx
 
-/**
+/*
+*
 Batch 系统设计
 对所有物体进行分类：静态和动态，静态物体使用稳定的batch系统，动态物体每次重新计算batch
 
@@ -21,13 +22,13 @@ Batch 系统设计
 动态系统，直接合并数据并生成渲染命令
 
 目前Batch实现只支持格式：pos_uv_color
- */
+*/
 type Batch struct {
 	TextureId uint16
 	depth     int16
 
-	VertexId  uint16
-	IndexId   uint16
+	VertexId uint16
+	IndexId  uint16
 
 	firstVertex uint16
 	numVertex   uint16

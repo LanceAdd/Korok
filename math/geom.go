@@ -15,7 +15,7 @@ type Rect struct {
 	Min, Max Point
 }
 
-func (rect *Rect) Dx() float32{
+func (rect *Rect) Dx() float32 {
 	return rect.Max.X - rect.Min.X
 }
 
@@ -26,10 +26,3 @@ func (rect *Rect) Dy() float32 {
 func (rect *Rect) Center() Point {
 	return Point{(rect.Max.X - rect.Min.X) / 2, (rect.Max.Y - rect.Min.X) / 2}
 }
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-// +build darwin linux windows
+//go:build (darwin && !ios) || (linux && !android) || windows
 
 package res
 

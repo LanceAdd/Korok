@@ -7,8 +7,8 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 
-	"korok.io/korok/hid/gl"
-	"korok.io/korok/math/f32"
+	"github.com/LanceAdd/Korok/hid/gl"
+	"github.com/LanceAdd/Korok/math/f32"
 	"unsafe"
 )
 
@@ -21,8 +21,8 @@ type Texture2D struct {
 	Id            uint32
 }
 
-func (t *Texture2D) Create(image image.Image) (error) {
-	t.Width  = float32(image.Bounds().Dx())
+func (t *Texture2D) Create(image image.Image) error {
+	t.Width = float32(image.Bounds().Dx())
 	t.Height = float32(image.Bounds().Dy())
 
 	if id, err := newTexture(image); err != nil {
@@ -42,7 +42,7 @@ func (t *Texture2D) Update(img image.Image, xoff, yoff int32, w, h int32) (err e
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{0, 0}, draw.Src)
 
 	gl.ActiveTexture(gl.TEXTURE0)
-	gl.BindTexture(gl.TEXTURE_2D, t.Id);
+	gl.BindTexture(gl.TEXTURE_2D, t.Id)
 	gl.TexSubImage2D(gl.TEXTURE_2D,
 		0,
 		xoff,
@@ -106,7 +106,7 @@ func newTexture(img image.Image) (uint32, error) {
 	return texture, nil
 }
 
-///// 还需要抽象 SubTexture 的概念出来
+// /// 还需要抽象 SubTexture 的概念出来
 type SubTex struct {
 	*Texture2D
 

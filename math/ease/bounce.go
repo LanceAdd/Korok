@@ -1,6 +1,5 @@
 package ease
 
-
 func InBounce(t float64) float64 {
 	return 1 - OutBounce(1-t)
 }

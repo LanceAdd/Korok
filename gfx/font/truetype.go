@@ -1,14 +1,14 @@
 package font
 
 import (
-	"github.com/golang/freetype/truetype"
+	xfont "golang.org/x/image/font"
+	"golang.org/x/image/font/opentype"
 	"golang.org/x/image/math/fixed"
 
 	"image"
 	"image/draw"
 	"image/png"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 )
@@ -21,13 +21,13 @@ import (
 // The low and high values determine the lower and upper rune limits
 // we should load for this Font. For standard ASCII this would be:32, 127.
 func LoadTrueType(r io.Reader, lc TTFConfig) (*fontAtlas, error) {
-	data, err := ioutil.ReadAll(r)
+	data, err := io.ReadAll(r)
 	if err != nil {
 		return nil, err
 	}
 
 	// Read the TrueType Font
-	ttf, err := truetype.Parse(data)
+	ttf, err := opentype.Parse(data)
 	if err != nil {
 		return nil, err
 	}
@@ -39,23 +39,32 @@ func LoadTrueType(r io.Reader, lc TTFConfig) (*fontAtlas, error) {
 	img := image.NewRGBA(rect)
 	padding := fixed.I(2)
 
-	// Use a FreeType context to do the drawing.
-	face := truetype.NewFace(ttf, &truetype.Options{
-		Size: float64(lc.FontSize()),
-		DPI:  72,
+	// Use an OpenType face to do the drawing.
+	face, err := opentype.NewFace(ttf, &opentype.FaceOptions{
+		Size:    float64(lc.FontSize()),
+		DPI:     72,
+		Hinting: xfont.HintingNone,
 	})
+	if err != nil {
+		return nil, err
+	}
 
 	// new font-atlas
 	f := &fontAtlas{glyphs: make(map[rune]Glyph)}
 
 	// Iterate over all relevant glyphs in the truetype fontAtlas and
 	// draw them all to the image buffer.
+	gb, err := ttf.Bounds(nil, fixed.I(lc.FontSize()), xfont.HintingNone)
+	if err != nil {
+		return nil, err
+	}
+	m := face.Metrics()
+
 	var (
-		gb = ttf.Bounds(fixed.I(lc.FontSize()))
 		gw = gb.Max.X - gb.Min.X
 		gh = gb.Max.Y - gb.Min.Y
-		hh = face.Metrics().Ascent + face.Metrics().Descent
-		ah = face.Metrics().Ascent
+		hh = m.Ascent + m.Descent
+		ah = m.Ascent
 	)
 
 	width := fixed.I(iw)

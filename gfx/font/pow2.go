@@ -1,9 +1,9 @@
 package font
 
 import (
-	"korok.io/korok/math"
-	"image"
 	"fmt"
+	"github.com/LanceAdd/Korok/math"
+	"image"
 	"image/color"
 )
 
@@ -47,7 +47,6 @@ func Pow2Image(src image.Image) image.Image {
 	panic(fmt.Sprintf("Unsupported image format: %T", src))
 }
 
-//
 type copyable interface {
 	image.Image
 	Set(x, y int, clr color.Color)
@@ -64,5 +63,3 @@ func copyImg(src, dst copyable) image.Image {
 	}
 	return dst
 }
-
-

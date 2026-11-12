@@ -1,25 +1,25 @@
 package engi
 
 /**
-	定义ECS组件: Entity/Component/System
+定义ECS组件: Entity/Component/System
 
-	Entity 仅仅是一个类型为 uint32 的 id， 高8位表示出生代，低24位表示索引。
-	因为 Entity 可以被不断的销毁和重建，可以使用高8位来记录在同一个索引位创建的Entity，
-	这样最多可以用24位来记录Entity的id，8位记录id复用情况，如此，同一个id在循环了256次
-	之后才会出现Entity重复的情况。
+Entity 仅仅是一个类型为 uint32 的 id， 高8位表示出生代，低24位表示索引。
+因为 Entity 可以被不断的销毁和重建，可以使用高8位来记录在同一个索引位创建的Entity，
+这样最多可以用24位来记录Entity的id，8位记录id复用情况，如此，同一个id在循环了256次
+之后才会出现Entity重复的情况。
 
-	三个主要接口：
-	1. Create() Entity
-	2. Alive(Entity)
-	3. Destroy(Entity)
-	增删查
- */
+三个主要接口：
+1. Create() Entity
+2. Alive(Entity)
+3. Destroy(Entity)
+增删查
+*/
 
 const IndexBits = 24
-const IndexMask = (1<< IndexBits)-1
+const IndexMask = (1 << IndexBits) - 1
 
 const GenerationBits = 8
-const GenerationMask = (1<< GenerationBits)-1
+const GenerationMask = (1 << GenerationBits) - 1
 
 // An invalid entity
 const Ghost = Entity(0xFFFFFFFF)
@@ -33,7 +33,7 @@ func (e Entity) Index() uint32 {
 }
 
 func (e Entity) Gene() uint8 {
-	return uint8(e >>IndexBits) & GenerationMask
+	return uint8(e>>IndexBits) & GenerationMask
 }
 
 // 要不要用一个数组来管理所有的 Entity-Id 索引？
@@ -42,7 +42,7 @@ func (e Entity) Gene() uint8 {
 type EntityManager struct {
 	generation []uint8
 	freelist   []uint32
-	id Entity
+	id         Entity
 }
 
 func NewEntityManager() *EntityManager {
@@ -69,6 +69,6 @@ func (em *EntityManager) Alive(e Entity) bool {
 
 func (em *EntityManager) Destroy(e Entity) {
 	ei := e.Index()
-	em.generation[ei] ++
+	em.generation[ei]++
 	em.freelist = append(em.freelist, ei)
 }

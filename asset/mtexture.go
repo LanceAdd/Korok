@@ -1,15 +1,15 @@
 package asset
 
 import (
-	"korok.io/korok/asset/res"
-	"korok.io/korok/gfx"
-	"korok.io/korok/gfx/bk"
+	"github.com/LanceAdd/Korok/asset/res"
+	"github.com/LanceAdd/Korok/gfx"
+	"github.com/LanceAdd/Korok/gfx/bk"
 
 	"encoding/json"
 	"errors"
 	"fmt"
 	"image"
-	"io/ioutil"
+	"io"
 	"log"
 )
 
@@ -169,7 +169,7 @@ func (tm *TextureManager) loadAtlas(img, desc string) (id uint16, at *atlas, e e
 		e = err
 		return
 	}
-	d, err := ioutil.ReadAll(file)
+	d, err := io.ReadAll(file)
 	if err != nil {
 		e = err
 		return

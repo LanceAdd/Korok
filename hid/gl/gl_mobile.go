@@ -1,3 +1,4 @@
+//go:build !js && (android || ios)
 // +build !js
 // +build android ios
 

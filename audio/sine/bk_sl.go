@@ -1,3 +1,4 @@
+//go:build android && !js
 // +build android,!js
 
 package sine
@@ -313,7 +314,7 @@ SLresult SineStreamPlayer_getVolume(SineStreamPlayer *p, SLmillibel *v) {
 	return (*p->volume)->GetVolumeLevel(p->volume, v);
 }
 
- */
+*/
 import "C"
 import (
 	//"unsafe"
@@ -321,14 +322,14 @@ import (
 	"log"
 	//"unsafe"
 	//"unsafe"
-	"unsafe"
 	"math"
+	"unsafe"
 )
 
 // StaticData is small audio sampler, which will be load into memory directly.
 type StaticData struct {
 	bits []byte
-	fmt uint32
+	fmt  uint32
 	freq int32
 }
 
@@ -370,12 +371,12 @@ func (eng *Engine) Destroy() {
 type BufferPlayer struct {
 	player C.SineBufferPlayer
 	volume float32
-	state int
+	state  int
 }
 
 func (p *BufferPlayer) initialize(engine *Engine) {
 	var (
-		numBuffers = C.SLuint32(2)
+		numBuffers  = C.SLuint32(2)
 		numChannels = C.SLuint32(2)
 	)
 	if ret := C.SineBufferPlayer_init(&p.player, &engine.engine, numBuffers, numChannels); ret != OK {
@@ -420,7 +421,6 @@ func (p *BufferPlayer) Resume() {
 // buffer-queue has nothing to do with player state. It' still
 // playing even though queue exhausted.
 
-
 func (p *BufferPlayer) State() int {
 	if st := p.state; st != Playing {
 		return st
@@ -454,15 +454,15 @@ func (p *BufferPlayer) SetLoop(n int) {
 
 // StreamPlayer can play audio loaded as StreamData.
 type StreamPlayer struct {
-	player C.SineStreamPlayer
-	decoder      Decoder
-	volume float32
-	state int
+	player  C.SineStreamPlayer
+	decoder Decoder
+	volume  float32
+	state   int
 }
 
 func (p *StreamPlayer) initialize(engine *Engine) {
 	var (
-		numBuffers = C.SLuint32(2)
+		numBuffers  = C.SLuint32(2)
 		numChannels = C.SLuint32(2)
 	)
 	if ret := C.SineStreamPlayer_init(&p.player, &engine.engine, numBuffers, numChannels); ret != OK {
@@ -529,7 +529,7 @@ func (p *StreamPlayer) SetVolume(v float32) {
 	var db C.SLmillibel
 	if v > 0 {
 		p.volume = v
-		db = C.SLmillibel(math.Log10(float64(v))*2000)
+		db = C.SLmillibel(math.Log10(float64(v)) * 2000)
 	} else {
 		p.volume = 0
 		db = C.SL_MILLIBEL_MIN
@@ -555,7 +555,7 @@ func (p *StreamPlayer) fill() {
 	}
 
 	// feed the free buffer one by one.
-	for ;free > 0 ; free-- {
+	for ; free > 0; free-- {
 		if n := d.Decode(); n == 0 {
 			break
 		}
@@ -584,5 +584,3 @@ const (
 	Paused  = C.SL_PLAYSTATE_PAUSED
 	Stopped = C.SL_PLAYSTATE_STOPPED
 )
-
-

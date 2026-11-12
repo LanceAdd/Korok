@@ -29,7 +29,8 @@ func (m Mat3) Diag() Vec3 {
 // |1    x| |c -s  | |sx     | | 1 ky  | |1   -ox|
 // |  1  y| |s  c  | |   sy  | |kx  1  | |  1 -oy|
 // |     1| |     1| |      1| |      1| |     1 |
-//   move    rotate    scale     skew      origin
+//
+//	move    rotate    scale     skew      origin
 func (m Mat3) Transform(x, y float32) (x1, y1 float32) {
 	x1 = m[0]*x + m[3]*y + m[6]
 	y1 = m[1]*x + m[4]*y + m[7]
@@ -37,21 +38,23 @@ func (m Mat3) Transform(x, y float32) (x1, y1 float32) {
 }
 
 // Initialize defines a 3-D Matrix.
-//            | x |
-//            | y |
-//            | 1 |
+//
+//	| x |
+//	| y |
+//	| 1 |
+//
 // | e0 e3 e6 |
 // | e1 e4 e7 |
 // | e2 e5 e8 |
 func (m *Mat3) Initialize(x, y, angle, sx, sy, ox, oy, kx, ky float32) {
 	c, s := cos(angle), sin(angle)
 
-	m[0] = c * sx - ky * s * sy // = a
-	m[1] = s * sx + ky * c * sy // = b
-	m[3] = kx * c * sx - s * sy // = c
-	m[4] = kx * s * sx + c * sy // = d
-	m[6] = x - ox * m[0] - oy * m[3]
-	m[7] = y - ox * m[1] - oy * m[4]
+	m[0] = c*sx - ky*s*sy // = a
+	m[1] = s*sx + ky*c*sy // = b
+	m[3] = kx*c*sx - s*sy // = c
+	m[4] = kx*s*sx + c*sy // = d
+	m[6] = x - ox*m[0] - oy*m[3]
+	m[7] = y - ox*m[1] - oy*m[4]
 
 	m[2], m[5] = 0, 0
 	m[8] = 1.0
@@ -60,12 +63,12 @@ func (m *Mat3) Initialize(x, y, angle, sx, sy, ox, oy, kx, ky float32) {
 func (m *Mat3) InitializeScale1(x, y, angle, ox, oy float32) {
 	c, s := cos(angle), sin(angle)
 
-	m[0] = c // = a
-	m[1] = s // = b
-	m[3] = - s // = c
-	m[4] = + c // = d
-	m[6] = x - ox * m[0] - oy * m[3]
-	m[7] = y - ox * m[1] - oy * m[4]
+	m[0] = c  // = a
+	m[1] = s  // = b
+	m[3] = -s // = c
+	m[4] = +c // = d
+	m[6] = x - ox*m[0] - oy*m[3]
+	m[7] = y - ox*m[1] - oy*m[4]
 
 	m[2], m[5] = 0, 0
 	m[8] = 1.0

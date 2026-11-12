@@ -1,6 +1,6 @@
 package sine
 
-import "korok.io/korok/asset/res"
+import "github.com/LanceAdd/Korok/asset/res"
 
 // audio file decoder
 type Decoder interface {

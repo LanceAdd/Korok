@@ -1,8 +1,8 @@
 package ogg
 
 import (
+	"github.com/LanceAdd/Korok/asset/res"
 	"github.com/jfreymuth/oggvorbis"
-	"korok.io/korok/asset/res"
 
 	"io"
 	"log"

@@ -1,6 +1,5 @@
 package ease
 
-
 func InQuart(t float64) float64 {
 	return t * t * t * t
 }

@@ -13,7 +13,7 @@ func TestPool(t *testing.T) {
 
 	//   Life: Cap * sizeOf(float)
 	// + Position: Cap * sizeOf(vec2)
-	size := 1024 * 4 + 1024 * 8
+	size := 1024*4 + 1024*8
 	if p.Size() != size {
 		t.Error("fail to compute ParticleSize")
 	}
@@ -30,7 +30,7 @@ func TestPool(t *testing.T) {
 	}
 
 	d := uintptr(unsafe.Pointer(&pose[0])) - uintptr(unsafe.Pointer(&life[0]))
-	if int(d) != 1024 * 4 { // Cap * sizeOf(float)
+	if int(d) != 1024*4 { // Cap * sizeOf(float)
 		t.Error("fail to alloc Life and position")
 	}
 }

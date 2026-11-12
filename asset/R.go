@@ -6,16 +6,14 @@ type refCount struct {
 }
 
 type idCount struct {
-	rid uint16 	// 资源ID
-	cnt uint16  // 引用计数
+	rid uint16 // 资源ID
+	cnt uint16 // 引用计数
 }
 
 /// 资源在各自相关的系统内管理，此处只提供工具方法
 /// 和引用计数相关的操作
 
-
-
-func Clear()  {
+func Clear() {
 	// TODO
 	//for _, v := range shaders {
 	//	gl.DeleteProgram(v.Program)

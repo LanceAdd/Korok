@@ -1,4 +1,5 @@
-//+build !android,!js,!windows
+//go:build !android && !js && !windows
+// +build !android,!js,!windows
 
 package sine
 
@@ -275,10 +276,10 @@ func (p *BufferPlayer) State() uint32 {
 
 // StreamPlayer can play audio loaded as StreamData.
 type StreamPlayer struct {
-	player C.SineStreamPlayer
-	format uint32
+	player     C.SineStreamPlayer
+	format     uint32
 	sampleRate int32
-	decoder      Decoder
+	decoder    Decoder
 }
 
 func (p *StreamPlayer) initialize(engine *Engine) {
@@ -354,7 +355,7 @@ func (p *StreamPlayer) fill() {
 	}
 
 	// feed the free buffer one by one.
-	for ;free > 0 ; free-- {
+	for ; free > 0; free-- {
 		if n := d.Decode(); n == 0 {
 			break
 		}

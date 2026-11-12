@@ -3,7 +3,7 @@ package sine
 import (
 	"log"
 
-	"korok.io/korok/asset/res"
+	"github.com/LanceAdd/Korok/asset/res"
 )
 
 type FileType uint8
@@ -64,8 +64,8 @@ func NewAudioManager() *AudioManger {
 	return new(AudioManger)
 }
 
-/// 加载数据，得到 Sound 实例
-/// 此时应该得出, 采样率，是否Stream等，
+// / 加载数据，得到 Sound 实例
+// / 此时应该得出, 采样率，是否Stream等，
 func (am *AudioManger) LoadSound(name string, ft FileType, sType SourceType) (id uint16, sound *Sound) {
 	id, sound = am.indexPool, &am.soundPool[am.indexPool]
 	am.indexPool++
@@ -163,7 +163,7 @@ func getFormat(channels, depth int32) FormatEnum {
 	return format
 }
 
-///////// static and global field
+// /////// static and global field
 var formatCodes = []uint32{
 	0, // none
 	FormatMono8,

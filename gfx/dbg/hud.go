@@ -8,11 +8,11 @@ func LogFPS(fps, drawCall int) {
 	hud.fps = fps
 	hud.drawCall = drawCall
 	if DEBUG != None {
-		hud.drawCall = drawCall-1
+		hud.drawCall = drawCall - 1
 	}
 }
 
-func Hud(format string, args... interface{}) {
+func Hud(format string, args ...interface{}) {
 	hud.verbs = append(hud.verbs, fmt.Sprintf(format, args...))
 }
 
@@ -22,7 +22,7 @@ func HudFunc(fn func() string) {
 
 // Game internal state.
 type HudLog struct {
-	verbs []string
+	verbs         []string
 	drawCall, fps int
 }
 
@@ -61,7 +61,7 @@ func drawFps(x, y float32, fps int) {
 	// format: RGBA
 	Color(0xFF00FF00)
 
-	w := float32(fps)/60 * 50
+	w := float32(fps) / 60 * 50
 	gBuffer.Rect(x+5, y+5, w, 5)
 
 	// format: RGBA
@@ -70,6 +70,6 @@ func drawFps(x, y float32, fps int) {
 	gBuffer.String(x+5, y+10, fmt.Sprintf("%d fps", fps), .6)
 }
 
-func drawDrawCall(x,y float32, dc int) {
+func drawDrawCall(x, y float32, dc int) {
 	gBuffer.String(x+5, y+25, fmt.Sprintf("DrawCall: %d", hud.drawCall), .6)
 }

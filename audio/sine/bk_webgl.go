@@ -14,7 +14,8 @@
 
 // vanishs 修改于github.com/hajimehoshi/oto
 
-//+build js
+//go:build js
+// +build js
 
 package sine
 
@@ -24,7 +25,8 @@ import (
 
 	"syscall/js"
 
-	"korok.io/korok/hid"
+	"github.com/LanceAdd/Korok/hid"
+	"github.com/LanceAdd/Korok/webav"
 )
 
 type driver struct {
@@ -143,9 +145,9 @@ func (p *driver) TryWrite(data []byte) (int, error) {
 
 	buf := p.context.Call("createBuffer", p.channelNum, audioBufferSamples, p.sampleRate)
 	l, r := toLR(p.tmp[:le])
-	tl := js.TypedArrayOf(l)
-	tr := js.TypedArrayOf(r)
-	if buf.Get("copyToChannel") != js.Undefined() {
+	tl := webav.Float32Array(l)
+	tr := webav.Float32Array(r)
+	if !buf.Get("copyToChannel").IsUndefined() {
 		buf.Call("copyToChannel", tl, 0, 0)
 		buf.Call("copyToChannel", tr, 1, 0)
 	} else {
@@ -153,8 +155,6 @@ func (p *driver) TryWrite(data []byte) (int, error) {
 		buf.Call("getChannelData", 0).Call("set", tl)
 		buf.Call("getChannelData", 1).Call("set", tr)
 	}
-	tl.Release()
-	tr.Release()
 
 	s := p.context.Call("createBufferSource")
 	s.Set("buffer", buf)

@@ -1,6 +1,6 @@
 package array
 
-const STEP  = 64
+const STEP = 64
 
 type DenseIntMap struct {
 	entries []int
@@ -42,7 +42,6 @@ func (m *DenseIntMap) Clear() {
 
 }
 
-
 type SparseIntMap struct {
 	keys []int
 	vals []int
@@ -65,7 +64,7 @@ func (m *SparseIntMap) Compact() {
 func (m *SparseIntMap) Put(k, v int) {
 	m.keys[m.used] = k
 	m.vals[m.used] = v
-	m.used ++
+	m.used++
 }
 
 func (m *SparseIntMap) Get(k int) (v int) {
@@ -76,4 +75,3 @@ func (m *SparseIntMap) Get(k int) (v int) {
 func (m *SparseIntMap) Del(k int) {
 
 }
-

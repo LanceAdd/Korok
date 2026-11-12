@@ -1,3 +1,4 @@
+//go:build js
 // +build js
 
 // Copyright 2014 Joseph Hager. All rights reserved.
@@ -48,15 +49,15 @@ func AudioNewContext(ca *AudioContextAttributes) (*AudioContext, error) {
 	}
 
 	audioContext := js.Global().Get("AudioContext")
-	if audioContext == js.Undefined() || audioContext == js.Null() {
+	if audioContext.IsUndefined() || audioContext.IsNull() {
 		audioContext = js.Global().Get("webkitAudioContext")
 	}
-	if audioContext == js.Undefined() || audioContext == js.Null() {
+	if audioContext.IsUndefined() || audioContext.IsNull() {
 		return nil, errors.New("Your browser doesn't appear to support Web Audio API.")
 	}
 
 	ac := audioContext.New(ms2mi(attrs))
-	if ac == js.Null() {
+	if ac.IsNull() {
 		return nil, errors.New("Creating a Web Audio API context has failed.")
 	}
 	ctx := new(AudioContext)

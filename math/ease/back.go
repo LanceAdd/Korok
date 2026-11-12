@@ -23,5 +23,3 @@ func InOutBack(t float64) float64 {
 		return 0.5 * (t*t*((s+1)*t+s) + 2)
 	}
 }
-
-

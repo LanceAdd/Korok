@@ -7,7 +7,6 @@ import (
 	"image"
 	_ "image/jpeg"
 	_ "image/png"
-	"io/ioutil"
 )
 
 // LoadBitmap loads a bitmap (raster) fontAtlas from the given
@@ -32,7 +31,7 @@ func LoadBitmap(img, config io.Reader, scale int) (Font, error) {
 	}
 	// load glyph data
 	fc := &fontConfig{}
-	data, err := ioutil.ReadAll(config)
+	data, err := io.ReadAll(config)
 	if err != nil {
 		return nil, err
 	}

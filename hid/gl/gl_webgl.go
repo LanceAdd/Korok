@@ -1,3 +1,4 @@
+//go:build js
 // +build js
 
 package gl
@@ -7,7 +8,7 @@ import (
 
 	"syscall/js"
 
-	"korok.io/korok/webav"
+	"github.com/LanceAdd/Korok/webav"
 )
 
 var (
@@ -116,7 +117,7 @@ func DeleteVertexArrays(n int32, array *uint32) {
 
 func CreateProgram() uint32 {
 	x := gl.CreateProgram()
-	if x == js.Null() {
+	if x.IsNull() {
 		return 0
 	}
 	programCount++
@@ -158,7 +159,7 @@ func GetProgramInfoLog(program uint32) string {
 
 func CreateShader(xtype uint32) uint32 {
 	x := gl.CreateShader(int(xtype))
-	if x == js.Null() {
+	if x.IsNull() {
 		return 0
 	}
 	shaderCount++
@@ -203,7 +204,7 @@ func DeleteShader(shader uint32) {
 
 func GenBuffers(n int32, buffers *uint32) {
 	x := gl.CreateBuffer()
-	if x == js.Null() {
+	if x.IsNull() {
 		*buffers = 0
 		return
 	}
@@ -220,18 +221,16 @@ func BufferData(target uint32, size int, data unsafe.Pointer, usage uint32) {
 	sl := &Slice{Addr: uintptr(data), Len: size, Cap: size}
 	b := *(*[]uint8)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Uint8Array(b)
 	gl.BufferData(int(target), ta, int(usage))
-	ta.Release()
 }
 
 func BufferSubData(target uint32, offset, size int, data unsafe.Pointer) {
 	sl := &Slice{Addr: uintptr(data), Len: size, Cap: size}
 	b := *(*[]uint8)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Uint8Array(b)
 	gl.BufferSubData(int(target), int(offset), ta)
-	ta.Release()
 }
 
 func BindBuffer(target uint32, buffer uint32) {
@@ -255,7 +254,7 @@ func DrawArrays(mode uint32, first, count int32) {
 
 func GetUniformLocation(program uint32, name string) int32 {
 	x := gl.GetUniformLocation(programMap[program], cstr2str(name))
-	if x == js.Null() {
+	if x.IsNull() {
 		return 0
 	}
 	locationCount++
@@ -271,9 +270,8 @@ func Uniform1iv(loc, num int32, v *int32) {
 	sl := &Slice{Addr: uintptr(unsafe.Pointer(v)), Len: int(num), Cap: int(num)}
 	b := *(*[]int32)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Int32Array(b)
 	gl.Uniform1iv(locationMap[loc], ta)
-	ta.Release()
 }
 
 func Uniform1f(location int32, v0 float32) {
@@ -296,36 +294,32 @@ func Uniform1fv(loc, num int32, v *float32) {
 	sl := &Slice{Addr: uintptr(unsafe.Pointer(v)), Len: int(num), Cap: int(num)}
 	b := *(*[]float32)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Float32Array(b)
 	gl.Uniform1fv(locationMap[loc], ta)
-	ta.Release()
 }
 
 func Uniform4fv(loc, num int32, v *float32) {
 	sl := &Slice{Addr: uintptr(unsafe.Pointer(v)), Len: int(num * 4), Cap: int(num * 4)}
 	b := *(*[]float32)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Float32Array(b)
 	gl.Uniform4fv(locationMap[loc], ta)
-	ta.Release()
 }
 
 func UniformMatrix3fv(loc, num int32, t bool, v *float32) {
 	sl := &Slice{Addr: uintptr(unsafe.Pointer(v)), Len: int(num * 9), Cap: int(num * 9)}
 	b := *(*[]float32)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Float32Array(b)
 	gl.UniformMatrix3fv(locationMap[loc], t, ta)
-	ta.Release()
 }
 
 func UniformMatrix4fv(loc, num int32, t bool, v *float32) {
 	sl := &Slice{Addr: uintptr(unsafe.Pointer(v)), Len: int(num * 16), Cap: int(num * 16)}
 	b := *(*[]float32)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Float32Array(b)
 	gl.UniformMatrix4fv(locationMap[loc], t, ta)
-	ta.Release()
 }
 
 // attribute
@@ -374,9 +368,8 @@ func TexSubImage2D(target uint32, level int32, xOffset, yOffset, width, height i
 	sl := &Slice{Addr: uintptr(pixels), Len: int(sizePerpix * width * height), Cap: int(sizePerpix * width * height)}
 	b := *(*[]uint8)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Uint8Array(b)
 	gl.TexSubImage2D(int(target), int(level), int(xOffset), int(yOffset), int(format), int(xtype), ta)
-	ta.Release()
 }
 
 func TexImage2D(target uint32, level int32, internalFormat int32, width, height, border int32, format, xtype uint32, pixels unsafe.Pointer) {
@@ -398,9 +391,8 @@ func TexImage2D(target uint32, level int32, internalFormat int32, width, height,
 	sl := &Slice{Addr: uintptr(pixels), Len: int(sizePerpix * width * height), Cap: int(sizePerpix * width * height)}
 	b := *(*[]uint8)(unsafe.Pointer(sl))
 
-	ta := js.TypedArrayOf(b)
+	ta := webav.Uint8Array(b)
 	gl.TexImage2D(int(target), int(level), int(internalFormat), int(width), int(height), int(border), int(format), int(xtype), ta)
-	ta.Release()
 }
 
 func DeleteTextures(n int32, textures *uint32) {
@@ -410,7 +402,7 @@ func DeleteTextures(n int32, textures *uint32) {
 
 func GenTextures(n int32, textures *uint32) {
 	x := gl.CreateTexture()
-	if x == js.Null() {
+	if x.IsNull() {
 		*textures = 0
 		return
 	}

@@ -1,3 +1,4 @@
+//go:build android || ios || windows || js
 // +build android ios windows js
 
 package dbg
